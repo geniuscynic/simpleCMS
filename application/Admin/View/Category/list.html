@@ -1,0 +1,66 @@
+{extend name="Public:base" /} {block name="main"}
+
+
+
+<div class="card">
+  <div class="card-body">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="#">板块管理</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">板块列表</li>
+      </ol>
+    </nav>
+    <h3 class="box-title">板块列表</h3>
+    <hr />
+
+    <form method="POST" class="col-4">
+      {include file="public/errormessage" /}
+
+     
+      <div class="form-group">
+        
+        <div id="treeview"></div>
+
+        <input type="hidden" id="parentCategoryId" name="parentCategoryId" value="0" />
+
+       
+      </div>
+
+      
+
+    </form>
+  </div>
+</div>
+{/block} {block name="footerscript"} {__block__}
+
+<link rel="stylesheet" href="/simpleCMS/public/lib/bootstrap-treeview/css/bootstrap-treeview.css" />
+<script src="/simpleCMS/public/lib/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+
+<script type="text/javascript">
+
+
+
+  $(document).ready(function () {
+     
+
+      var treeData = {$category|raw};
+      $('#treeview').treeview({
+        data: treeData,
+        levels: 5,
+        onNodeSelected: function (event, data) {
+          // Your logic goes here
+          //var a = data;
+          $("#partentCategory").val(data.text);
+          $("#parentCategoryId").val(data.id);
+          $("#level").val(data.level);
+
+          $('#treeview').collapse('hide');
+        }
+      });
+  });
+</script> {/block}
