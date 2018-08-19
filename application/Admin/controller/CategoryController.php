@@ -19,27 +19,51 @@ class CategoryController extends BaseController
              );
 
              $result = model("category")->Add($form);
-             $this->show();
+            
              $this->setMessage($result);
             //$this->redirect('admin/category/add');
             
         }
 
-        $result = model("category")->GetCategory();
-        $this->assign('category', json_encode($result));
+       $this->showCategory();
 
         return $this->fetch();
     }
 
     public function List() {
+        $result = model("category")->GetCategory();
+        $this->assign('categoryList', $result);
+
+    //   $this->showCategory();
         return $this->fetch();
     }
 
-    protected function show() {
-        
-        $result = model("category")->GetCategory();
+    public function Save() {
+        //$result = model("category")->GetCategory();
+        //$this->assign('categoryList', $result);
 
+    //   $this->showCategory();
+        $input = input('post.');
+
+        $form = array(
+            'name' => $input['name'],
+            'seqNum' => $input['seqNum'],
+            'id' => $input['id']
+        );
+
+
+        $result = model("category")->SaveCatetory($form);
+        
+           // return json_encode($result->getMessage(),JSON_UNESCAPED_UNICODE);
+        
+        //dump($result);
         //dump(json_encode($result));
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
+    protected function showCategory() {
+        
+        $result = model("category")->GetCategoryTree();
         $this->assign('category', json_encode($result));
    }
 

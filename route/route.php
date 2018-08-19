@@ -23,7 +23,7 @@ Route::group('admin', function () {
 
     Route::rule("/category/add", "admin/category/add", "POST|GET");
     Route::rule("/category/list", "admin/category/list", "GET");
-
+    Route::rule("/category/save", "admin/category/save", "POST");
 
     Route::rule("/blog/add", "admin/blog/add", "POST|GET");
 

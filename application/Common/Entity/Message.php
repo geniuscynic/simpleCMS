@@ -10,9 +10,9 @@ class Message
     public  const  TYPE_FAILED = 2;
     
    
-    private $type = 0;
-    private $message = array();
-    private $resultValue = array();
+    public $type = 0;
+    public $message = array();
+    public $resultValue = array();
 
     // function __construct() {
     //     $this->setType($this->TYPE_DEFAYLT);
@@ -67,10 +67,6 @@ class Message
 
        
     }
-
-    
-
-    
 
     public function getMessage() : array {
        
