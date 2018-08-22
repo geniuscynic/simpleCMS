@@ -26,7 +26,6 @@ Route::group('admin', function () {
     Route::rule("/category/save", "admin/category/save", "POST");
 
     Route::rule("/blog/add", "admin/blog/add", "POST|GET");
-
     Route::rule("/blog/list", "admin/blog/list", "GET");
 });
 

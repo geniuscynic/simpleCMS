@@ -62,3 +62,7 @@ $.validator.setDefaults({
 	}
 	
 });
+
+$.validator.addMethod("notEqual", function(value, element, param) {
+	return this.optional(element) || value != param;
+  }, "不能为空");

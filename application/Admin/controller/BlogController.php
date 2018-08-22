@@ -3,6 +3,8 @@ namespace app\admin\controller;
 
 use app\Common\controller\BaseController;
 
+//require_once '/verdor/HTMLPurifier/HTMLPurifier.auto.php';
+
 class BlogController extends BaseController
 {
    
@@ -17,27 +19,40 @@ class BlogController extends BaseController
                 'tag' => $input['tag'],
              );
 
+             require_once(__DIR__ . '/../../../vendor/HTMLPurifier/HTMLPurifier.auto.php');
+             $config = \HTMLPurifier_Config::createDefault();
+           
+             $purifier = new \HTMLPurifier($config);
+             $form['content'] = $purifier->purify($form['content']);
+
+             //dump($form);
              $result = model("blog")->Add($form);
+             
 
-            if(count($result['msg']) > 0) {
-                dump($result);
-            }
-            else {
-                //session('user', $result['value']);
+             $this->setMessage($result);
 
-                //$this->redirect(url('/admin/home'));
-                $result['msg'][0] = "添加成功";
-               // dump($result);
-            } 
+           
         }
 
+        $this->showMenu();
         return $this->fetch();
     }
 
 
-    public function show() {
-        $category = model('category')->GetCategory();
-        $this->assign('category', $category);
-        
+    public function List() {
+        $blogList = model("blog")->GetBlogList();
+        $this->assign('blogList', $blogList);
+
+       // $users = model("blog")->with('profile')->select();
+        //dump($blogList);
+        return $this->fetch();
     }
+
+    protected function showMenu() {
+        $result = model("category")->GetCategoryTree();
+        $this->assign('category', json_encode($result,JSON_UNESCAPED_UNICODE));
+
+        $result = model("tags")->GetAllTags();
+        $this->assign('tags', json_encode($result,JSON_UNESCAPED_UNICODE));
+   }
 }

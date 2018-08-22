@@ -24,9 +24,9 @@ class CategoryController extends BaseController
             //$this->redirect('admin/category/add');
             
         }
-
-       $this->showCategory();
-
+       
+       $this->showMenu();
+       
         return $this->fetch();
     }
 
@@ -39,10 +39,7 @@ class CategoryController extends BaseController
     }
 
     public function Save() {
-        //$result = model("category")->GetCategory();
-        //$this->assign('categoryList', $result);
-
-    //   $this->showCategory();
+       
         $input = input('post.');
 
         $form = array(
@@ -61,10 +58,13 @@ class CategoryController extends BaseController
         return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
-    protected function showCategory() {
+    protected function showMenu() {
         
         $result = model("category")->GetCategoryTree();
-        $this->assign('category', json_encode($result));
+        $this->assign('category', json_encode($result,JSON_UNESCAPED_UNICODE));
+
+       
+       // 
    }
 
 }
